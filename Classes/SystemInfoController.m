@@ -40,29 +40,35 @@
         _mailComposer.mailComposeDelegate = self;
     }
 
+    NSString *messageTitle = NSLocalizedString(@"System information sent by DeviceDNA", @"Title of the e-mail message");
     NSMutableString *body = [[NSMutableString alloc] init];
-    [body appendString:@"<p><strong>System information sent by DeviceDNA:</p></strong><ul>"];
+    [body appendFormat:@"<p><strong>%@:</strong></p><ul>", messageTitle];
     
     if ([self exposesInformation:SystemInfoUUID])
     {
-        [body appendFormat:@"<li>Unique Identifier (UDID): %@</li>", _device.uniqueIdentifier];
+        NSString *uniqueIdentifierString = NSLocalizedString(@"Unique Device Identifier", @"The 'Unique Device Identifier' phrase");
+        [body appendFormat:@"<li>%@ (UDID): <strong>%@</strong></li>", uniqueIdentifierString, _device.uniqueIdentifier];
     }
     if ([self exposesInformation:SystemInfoName])
     {
-        [body appendFormat:@"<li>Name: %@</li>", _device.name];
+        NSString *nameString = NSLocalizedString(@"Device Name", @"The 'Name' word");
+        [body appendFormat:@"<li>%@: <strong>%@</strong></li>", nameString, _device.name];
     }
     if ([self exposesInformation:SystemInfoOS])
     {
-        [body appendFormat:@"<li>iPhone OS: %@ %@</li>", _device.systemName, _device.systemVersion];
+        NSString *iPhoneOSString = NSLocalizedString(@"iPhone OS Version", @"The 'iPhone OS' phrase");
+        [body appendFormat:@"<li>%@: <strong>%@ %@</strong></li>", iPhoneOSString, _device.systemName, _device.systemVersion];
     }
     if ([self exposesInformation:SystemInfoModel])
     {
-        [body appendFormat:@"<li>Model: %@</li>", _device.localizedModel];        
+        NSString *modelString = NSLocalizedString(@"Device Model", @"The 'Model' word");
+        [body appendFormat:@"<li>%@: <strong>%@</strong></li>", modelString, _device.localizedModel];        
     }
-    [body appendString:@"</ul><p><strong>DeviceDNA</strong> © Copyright 2009 <a href=\"http://akosma.com/\">akosma software</a>. All Rights Reserved.</p>"];
+    NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
+    [body appendFormat:@"</ul><p><strong>DeviceDNA</strong> © Copyright 2009 <a href=\"http://akosma.com/\">akosma software</a>. %@.</p>", allRightsReserved];
     
     [_mailComposer setToRecipients:[NSArray arrayWithObjects:@"devicedna@akosma.com", nil]];
-    [_mailComposer setSubject:@"System information sent by DeviceDNA"];
+    [_mailComposer setSubject:messageTitle];
     [_mailComposer setMessageBody:body isHTML:YES];
 
     [self presentModalViewController:_mailComposer animated:YES];
@@ -78,7 +84,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-    return @"Select the values to send\nand press the message button\n\nDeviceDNA © Copyright 2009\nakosma software - All Rights Reserved";
+    NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
+    NSString *instructions = NSLocalizedString(@"Select the values to send\nand press the message button", @"Instructions of use");
+    return [NSString stringWithFormat:@"%@\n\nDeviceDNA © Copyright 2009\nakosma software - All Rights Reserved", instructions, allRightsReserved];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -154,27 +162,32 @@
     _exposedInfoMask = SystemInfoUUID | SystemInfoName | SystemInfoOS | SystemInfoModel;
     NSString *identifier = @"SystemInformationCell";
     
+    NSString *uniqueIdentifierString = NSLocalizedString(@"Unique Device Identifier", @"The 'Unique Device Identifier' phrase");
+    NSString *nameString = NSLocalizedString(@"Device Name", @"The 'Name' word");
+    NSString *iPhoneOSString = NSLocalizedString(@"iPhone OS Version", @"The 'iPhone OS' phrase");
+    NSString *modelString = NSLocalizedString(@"Device Model", @"The 'Model' word");
+
     _uuidCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     _uuidCell.accessoryType = UITableViewCellAccessoryCheckmark;
     _uuidCell.textLabel.text = _device.uniqueIdentifier;
-    _uuidCell.detailTextLabel.text = @"Unique Device Identifier";
+    _uuidCell.detailTextLabel.text = uniqueIdentifierString;
     _uuidCell.tag = SystemInfoUUID;
     
     _nameCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     _nameCell.textLabel.text = _device.name;
-    _nameCell.detailTextLabel.text = @"Device Name";
+    _nameCell.detailTextLabel.text = nameString;
     _nameCell.accessoryType = UITableViewCellAccessoryCheckmark;
     _nameCell.tag = SystemInfoName;
     
     _systemCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     _systemCell.textLabel.text = [NSString stringWithFormat:@"%@ %@", _device.systemName, _device.systemVersion];
-    _systemCell.detailTextLabel.text = @"iPhone OS System";
+    _systemCell.detailTextLabel.text = iPhoneOSString;
     _systemCell.accessoryType = UITableViewCellAccessoryCheckmark;
     _systemCell.tag = SystemInfoOS;
     
     _modelCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     _modelCell.textLabel.text = _device.localizedModel;
-    _modelCell.detailTextLabel.text = @"Device Model";
+    _modelCell.detailTextLabel.text = modelString;
     _modelCell.accessoryType = UITableViewCellAccessoryCheckmark;
     _modelCell.tag = SystemInfoModel;
 }

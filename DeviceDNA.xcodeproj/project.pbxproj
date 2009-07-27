@@ -18,6 +18,7 @@
 		3ADCE4A4101DC8890018C0EE /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ADCE4A2101DC8890018C0EE /* icon.png */; };
 		3ADCE4BA101DCA1E0018C0EE /* DeviceDNAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADCE4B7101DCA1E0018C0EE /* DeviceDNAAppDelegate.m */; };
 		3ADCE4BB101DCA1E0018C0EE /* SystemInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ADCE4B9101DCA1E0018C0EE /* SystemInfoController.m */; };
+		3ADCE4D5101DCF640018C0EE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3ADCE4D4101DCF640018C0EE /* Localizable.strings */; };
 		3AF36624101DAB050020BF70 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF36623101DAB050020BF70 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,9 @@
 		3ADCE4B7101DCA1E0018C0EE /* DeviceDNAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceDNAAppDelegate.m; sourceTree = "<group>"; };
 		3ADCE4B8101DCA1E0018C0EE /* SystemInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemInfoController.h; sourceTree = "<group>"; };
 		3ADCE4B9101DCA1E0018C0EE /* SystemInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemInfoController.m; sourceTree = "<group>"; };
+		3ADCE4D6101DCF690018C0EE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3ADCE4D7101DCF6B0018C0EE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		3ADCE4D8101DCF6F0018C0EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3AF36623101DAB050020BF70 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +103,7 @@
 		3A4D1D3B101D879900676C15 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3ADCE4D4101DCF640018C0EE /* Localizable.strings */,
 				3ADCE4A2101DC8890018C0EE /* icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				3A4D1D3C101D879900676C15 /* About.xib */,
@@ -148,6 +153,15 @@
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "DeviceDNA" */;
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				es,
+				fr,
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* UDID */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -167,6 +181,7 @@
 				3A4D1D42101D879900676C15 /* Entitlements.plist in Resources */,
 				3A4D1D43101D879900676C15 /* MainWindow.xib in Resources */,
 				3ADCE4A4101DC8890018C0EE /* icon.png in Resources */,
+				3ADCE4D5101DCF640018C0EE /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +199,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3ADCE4D4101DCF640018C0EE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3ADCE4D6101DCF690018C0EE /* es */,
+				3ADCE4D7101DCF6B0018C0EE /* fr */,
+				3ADCE4D8101DCF6F0018C0EE /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
