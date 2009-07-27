@@ -86,7 +86,7 @@
 {
     NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
     NSString *instructions = NSLocalizedString(@"Select the values to send\nand press the message button", @"Instructions of use");
-    return [NSString stringWithFormat:@"%@\n\nDeviceDNA © Copyright 2009\nakosma software - All Rights Reserved", instructions, allRightsReserved];
+    return [NSString stringWithFormat:@"%@\n\nDeviceDNA © Copyright 2009 akosma\nsoftware - %@", instructions, allRightsReserved];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

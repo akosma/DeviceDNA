@@ -268,7 +268,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = DeviceDNA;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "56B31FEE-FCA8-4CA7-AD5A-0A94D32B839F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "01DDA876-C541-41E3-8F3E-EB3E7913E151";
 			};
 			name = "Distribution App Store";
 		};
