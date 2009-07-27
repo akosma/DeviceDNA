@@ -17,6 +17,7 @@
 		3A4D1D43101D879900676C15 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A4D1D3F101D879900676C15 /* MainWindow.xib */; };
 		3A4D1D7E101D89C900676C15 /* DeviceDNAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4D1D75101D89C900676C15 /* DeviceDNAAppDelegate.m */; };
 		3A4D1D80101D89C900676C15 /* SystemInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4D1D7A101D89C900676C15 /* SystemInfoController.m */; };
+		3ADCE4A4101DC8890018C0EE /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ADCE4A2101DC8890018C0EE /* icon.png */; };
 		3AF36624101DAB050020BF70 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF36623101DAB050020BF70 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		3A4D1D75101D89C900676C15 /* DeviceDNAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceDNAAppDelegate.m; sourceTree = "<group>"; };
 		3A4D1D79101D89C900676C15 /* SystemInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemInfoController.h; sourceTree = "<group>"; };
 		3A4D1D7A101D89C900676C15 /* SystemInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemInfoController.m; sourceTree = "<group>"; };
+		3ADCE4A2101DC8890018C0EE /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		3AF36623101DAB050020BF70 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +99,7 @@
 		3A4D1D3B101D879900676C15 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3ADCE4A2101DC8890018C0EE /* icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				3A4D1D3C101D879900676C15 /* About.xib */,
 				3A4D1D3D101D879900676C15 /* Default.png */,
@@ -179,6 +182,7 @@
 				3A4D1D41101D879900676C15 /* Default.png in Resources */,
 				3A4D1D42101D879900676C15 /* Entitlements.plist in Resources */,
 				3A4D1D43101D879900676C15 /* MainWindow.xib in Resources */,
+				3ADCE4A4101DC8890018C0EE /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
