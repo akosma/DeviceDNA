@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DeviceDNAAppDelegate : NSObject <UIApplicationDelegate, 
-                                       UITabBarControllerDelegate>
+@interface DeviceDNAAppDelegate : NSObject <UIApplicationDelegate>
 {
 @private
     IBOutlet UIWindow *_window;
