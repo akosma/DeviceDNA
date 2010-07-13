@@ -11,8 +11,11 @@
 @interface DeviceDNAAppDelegate : NSObject <UIApplicationDelegate>
 {
 @private
-    IBOutlet UIWindow *_window;
-    IBOutlet UINavigationController *_navigationController;
+    UIWindow *_window;
+    UINavigationController *_navigationController;
 }
+
+@property (nonatomic, retain) IBOutlet UIWindow *window;
+@property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
 @end

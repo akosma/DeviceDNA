@@ -10,13 +10,22 @@
 
 @implementation DeviceDNAAppDelegate
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application 
+@synthesize window = _window;
+@synthesize navigationController = _navigationController;
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [_window addSubview:_navigationController.view];
+    [self.window addSubview:self.navigationController.view];
+    [self.window makeKeyAndVisible];
+    return YES;
 }
 
 - (void)dealloc 
 {
+    [_window release];
+    _window = nil;
+    [_navigationController release];
+    _navigationController = nil;
     [super dealloc];
 }
 
