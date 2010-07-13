@@ -24,19 +24,23 @@ typedef enum {
                                                     MFMailComposeViewControllerDelegate>
 {
 @private
-    IBOutlet UITableView *_tableView;
-    IBOutlet UIBarButtonItem *_sendButton;
+    UITableView *_tableView;
+    UIBarButtonItem *_sendButton;
 
     UITableViewCell *_uuidCell;
     UITableViewCell *_nameCell;
     UITableViewCell *_systemCell;
     UITableViewCell *_modelCell;
+    NSArray *_cells;
 
     MFMailComposeViewController *_mailComposer;
 
     UIDevice *_device;
     SystemInfoItems _exposedInfoMask;
 }
+
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *sendButton;
 
 - (IBAction)send:(id)sender;
 

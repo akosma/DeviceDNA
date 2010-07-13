@@ -7,25 +7,62 @@
 //
 
 #import "SystemInfoController.h"
+#import <iAd/iAd.h>
 
-@interface SystemInfoController (Private)
+@interface SystemInfoController ()
+
+@property (nonatomic, retain) UITableViewCell *uuidCell;
+@property (nonatomic, retain) UITableViewCell *nameCell;
+@property (nonatomic, retain) UITableViewCell *systemCell;
+@property (nonatomic, retain) UITableViewCell *modelCell;
+@property (nonatomic, retain) MFMailComposeViewController *mailComposer;
+@property (nonatomic, assign) UIDevice *device;
+@property (nonatomic) SystemInfoItems exposedInfoMask;
+@property (nonatomic, copy) NSArray *cells;
+
 - (BOOL)exposesInformation:(SystemInfoItems)item;
 - (void)changeUIElements;
 - (void)unselect;
+- (void)showAdvertising;
+
 @end
 
 @implementation SystemInfoController
 
+@synthesize tableView = _tableView;
+@synthesize sendButton = _sendButton;
+@synthesize uuidCell = _uuidCell;
+@synthesize nameCell = _nameCell;
+@synthesize systemCell = _systemCell;
+@synthesize modelCell = _modelCell;
+@synthesize cells = _cells;
+@synthesize mailComposer = _mailComposer;
+@synthesize device = _device;
+@synthesize exposedInfoMask = _exposedInfoMask;
+
 #pragma mark -
 #pragma mark dealloc
 
-- (void)dealloc 
+- (void)dealloc
 {
-    [_mailComposer release];
+    [_tableView release];
+    _tableView = nil;
+    [_sendButton release];
+    _sendButton = nil;
     [_uuidCell release];
+    _uuidCell = nil;
     [_nameCell release];
+    _nameCell = nil;
     [_systemCell release];
+    _systemCell = nil;
     [_modelCell release];
+    _modelCell = nil;
+    [_cells release];
+    _cells = nil;
+    [_mailComposer release];
+    _mailComposer = nil;
+    _device = nil;
+    
     [super dealloc];
 }
 
@@ -34,10 +71,10 @@
 
 - (IBAction)send:(id)sender
 {
-    if (_mailComposer == nil)
+    if (self.mailComposer == nil)
     {
-        _mailComposer = [[MFMailComposeViewController alloc] init];
-        _mailComposer.mailComposeDelegate = self;
+        self.mailComposer = [[[MFMailComposeViewController alloc] init] autorelease];
+        self.mailComposer.mailComposeDelegate = self;
     }
 
     NSString *messageTitle = NSLocalizedString(@"System information sent by DeviceDNA", @"Title of the e-mail message");
@@ -47,31 +84,42 @@
     if ([self exposesInformation:SystemInfoUUID])
     {
         NSString *uniqueIdentifierString = NSLocalizedString(@"Unique Device Identifier", @"The 'Unique Device Identifier' phrase");
-        [body appendFormat:@"<li>%@ (UDID): <strong>%@</strong></li>", uniqueIdentifierString, _device.uniqueIdentifier];
+        [body appendFormat:@"<li>%@ (UDID): <strong>%@</strong></li>", uniqueIdentifierString, self.device.uniqueIdentifier];
     }
     if ([self exposesInformation:SystemInfoName])
     {
         NSString *nameString = NSLocalizedString(@"Device Name", @"The 'Name' word");
-        [body appendFormat:@"<li>%@: <strong>%@</strong></li>", nameString, _device.name];
+        [body appendFormat:@"<li>%@: <strong>%@</strong></li>", nameString, self.device.name];
     }
     if ([self exposesInformation:SystemInfoOS])
     {
         NSString *iPhoneOSString = NSLocalizedString(@"iPhone OS Version", @"The 'iPhone OS' phrase");
-        [body appendFormat:@"<li>%@: <strong>%@ %@</strong></li>", iPhoneOSString, _device.systemName, _device.systemVersion];
+        [body appendFormat:@"<li>%@: <strong>%@ %@</strong></li>", iPhoneOSString, self.device.systemName, self.device.systemVersion];
     }
     if ([self exposesInformation:SystemInfoModel])
     {
         NSString *modelString = NSLocalizedString(@"Device Model", @"The 'Model' word");
-        [body appendFormat:@"<li>%@: <strong>%@</strong></li>", modelString, _device.localizedModel];        
+        [body appendFormat:@"<li>%@: <strong>%@</strong></li>", modelString, self.device.localizedModel];        
     }
     NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
     [body appendFormat:@"</ul><p><strong>DeviceDNA</strong> © Copyright 2009 <a href=\"http://akosma.com/\">akosma software</a>. %@.</p>", allRightsReserved];
     
-    [_mailComposer setToRecipients:[NSArray arrayWithObjects:@"devicedna@akosma.com", nil]];
-    [_mailComposer setSubject:messageTitle];
-    [_mailComposer setMessageBody:body isHTML:YES];
+    [self.mailComposer setSubject:messageTitle];
+    [self.mailComposer setMessageBody:body isHTML:YES];
+    self.mailComposer.navigationBar.barStyle = UIBarStyleBlack;
 
-    [self presentModalViewController:_mailComposer animated:YES];
+    [self presentModalViewController:self.mailComposer animated:YES];
+}
+
+#pragma mark -
+#pragma mark MFMailComposeViewControllerDelegate methods
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller 
+          didFinishWithResult:(MFMailComposeResult)result 
+                        error:(NSError*)error
+{
+    [self.mailComposer dismissModalViewControllerAnimated:YES];
+    self.mailComposer = nil;
 }
 
 #pragma mark -
@@ -105,19 +153,19 @@
     switch (indexPath.row) 
     {
         case 0:
-            cell = _uuidCell;
+            cell = self.uuidCell;
             break;
             
         case 1:
-            cell = _nameCell;
+            cell = self.nameCell;
             break;
             
         case 2:
-            cell = _systemCell;
+            cell = self.systemCell;
             break;
             
         case 3:
-            cell = _modelCell;
+            cell = self.modelCell;
             break;
             
         default:
@@ -132,7 +180,7 @@
     
     // This toggles the value for the selected cell
     // as shown in http://www.dylanleigh.net/notes/c-cpp-tricks.html
-    _exposedInfoMask ^= cell.tag;
+    self.exposedInfoMask ^= cell.tag;
     [self changeUIElements];
     
     // This makes a visual deselection after 1/10th of second
@@ -140,66 +188,51 @@
 }
 
 #pragma mark -
-#pragma mark MFMailComposeViewControllerDelegate methods
-
-- (void)mailComposeController:(MFMailComposeViewController*)controller 
-          didFinishWithResult:(MFMailComposeResult)result 
-                        error:(NSError*)error
-{
-    [_mailComposer dismissModalViewControllerAnimated:YES];
-    [_mailComposer release];
-    _mailComposer = nil;
-}
-
-#pragma mark -
 #pragma mark UIViewController methods
 
 - (void)viewDidLoad
 {
-    _tableView.rowHeight = 60;
+    self.tableView.rowHeight = 60;
     
-    _device = [UIDevice currentDevice];
-    _exposedInfoMask = SystemInfoUUID | SystemInfoName | SystemInfoOS | SystemInfoModel;
+    self.device = [UIDevice currentDevice];
+    self.exposedInfoMask = SystemInfoUUID | SystemInfoName | SystemInfoOS | SystemInfoModel;
     NSString *identifier = @"SystemInformationCell";
     
     NSString *uniqueIdentifierString = NSLocalizedString(@"Unique Device Identifier", @"The 'Unique Device Identifier' phrase");
     NSString *nameString = NSLocalizedString(@"Device Name", @"The 'Name' word");
     NSString *iPhoneOSString = NSLocalizedString(@"iPhone OS Version", @"The 'iPhone OS' phrase");
     NSString *modelString = NSLocalizedString(@"Device Model", @"The 'Model' word");
+    NSString *sendButtonString = NSLocalizedString(@"Send", @"The label of the 'Send' button");
 
-    _uuidCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-    _uuidCell.accessoryType = UITableViewCellAccessoryCheckmark;
-    _uuidCell.textLabel.text = _device.uniqueIdentifier;
-    _uuidCell.detailTextLabel.text = uniqueIdentifierString;
-    _uuidCell.tag = SystemInfoUUID;
+    self.uuidCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+    self.uuidCell.textLabel.text = self.device.uniqueIdentifier;
+    self.uuidCell.detailTextLabel.text = uniqueIdentifierString;
+    self.uuidCell.tag = SystemInfoUUID;
     
-    _nameCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-    _nameCell.textLabel.text = _device.name;
-    _nameCell.detailTextLabel.text = nameString;
-    _nameCell.accessoryType = UITableViewCellAccessoryCheckmark;
-    _nameCell.tag = SystemInfoName;
+    self.nameCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+    self.nameCell.textLabel.text = self.device.name;
+    self.nameCell.detailTextLabel.text = nameString;
+    self.nameCell.tag = SystemInfoName;
     
-    _systemCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-    _systemCell.textLabel.text = [NSString stringWithFormat:@"%@ %@", _device.systemName, _device.systemVersion];
-    _systemCell.detailTextLabel.text = iPhoneOSString;
-    _systemCell.accessoryType = UITableViewCellAccessoryCheckmark;
-    _systemCell.tag = SystemInfoOS;
+    self.systemCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+    self.systemCell.textLabel.text = [NSString stringWithFormat:@"%@ %@", self.device.systemName, self.device.systemVersion];
+    self.systemCell.detailTextLabel.text = iPhoneOSString;
+    self.systemCell.tag = SystemInfoOS;
     
-    _modelCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-    _modelCell.textLabel.text = _device.localizedModel;
-    _modelCell.detailTextLabel.text = modelString;
-    _modelCell.accessoryType = UITableViewCellAccessoryCheckmark;
-    _modelCell.tag = SystemInfoModel;
+    self.modelCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+    self.modelCell.textLabel.text = self.device.localizedModel;
+    self.modelCell.detailTextLabel.text = modelString;
+    self.modelCell.tag = SystemInfoModel;
+    
+    self.cells = [NSArray arrayWithObjects:self.uuidCell, self.nameCell, self.systemCell, self.modelCell, nil];
+    self.sendButton.title = sendButtonString;
+    
+    [self showAdvertising];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self changeUIElements];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
-{
-    return NO;
 }
 
 - (void)didReceiveMemoryWarning 
@@ -212,33 +245,41 @@
 
 - (BOOL)exposesInformation:(SystemInfoItems)item
 {
-    return (_exposedInfoMask & item) == item;
+    return (self.exposedInfoMask & item) == item;
 }
 
 - (void)changeUIElements
 {
-    BOOL uuidExposed = [self exposesInformation:SystemInfoUUID];
-    BOOL nameExposed = [self exposesInformation:SystemInfoName];
-    BOOL osExposed = [self exposesInformation:SystemInfoOS];
-    BOOL modelExposed = [self exposesInformation:SystemInfoModel];
-    
-    _uuidCell.accessoryType = (uuidExposed) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    _nameCell.accessoryType = (nameExposed) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    _systemCell.accessoryType = (osExposed) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    _modelCell.accessoryType = (modelExposed) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    for (UITableViewCell *cell in self.cells)
+    {
+        BOOL exposed = [self exposesInformation:cell.tag];
+        cell.accessoryType = (exposed) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    }
 
-    _sendButton.enabled = (_exposedInfoMask != SystemInfoNone);
+    self.sendButton.enabled = (self.exposedInfoMask != SystemInfoNone);
 }
 
 - (void)unselect
 {
-	// Unselect the selected row if any
+    // Unselect the selected row if any
     // http://forums.macrumors.com/showthread.php?t=577677
-	NSIndexPath* selection = [_tableView indexPathForSelectedRow];
-	if (selection)
+    NSIndexPath* selection = [self.tableView indexPathForSelectedRow];
+    if (selection)
     {
-		[_tableView deselectRowAtIndexPath:selection animated:YES];
-    }    
+        [self.tableView deselectRowAtIndexPath:selection animated:YES];
+    }
 }
 
+- (void)showAdvertising
+{
+    Class klass = NSClassFromString(@"ADBannerView");
+    if (klass)
+    {
+        ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 366.0, 320.0, 50.0)];
+        adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifier320x50;
+        [self.view addSubview:adView];
+    }
+}
+    
 @end
