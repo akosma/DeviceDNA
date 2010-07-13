@@ -102,7 +102,7 @@
         [body appendFormat:@"<li>%@: <strong>%@</strong></li>", modelString, self.device.localizedModel];        
     }
     NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
-    [body appendFormat:@"</ul><p><strong>DeviceDNA</strong> © Copyright 2009 <a href=\"http://akosma.com/\">akosma software</a>. %@.</p>", allRightsReserved];
+    [body appendFormat:@"</ul><p><strong>DeviceDNA</strong> © Copyright 2009-2010 <a href=\"http://akosma.com/\">akosma software</a>. %@.</p>", allRightsReserved];
     
     [self.mailComposer setSubject:messageTitle];
     [self.mailComposer setMessageBody:body isHTML:YES];
@@ -134,7 +134,7 @@
 {
     NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
     NSString *instructions = NSLocalizedString(@"Select the values to send\nand press the message button", @"Instructions of use");
-    return [NSString stringWithFormat:@"%@\n\nDeviceDNA © Copyright 2009 akosma\nsoftware - %@", instructions, allRightsReserved];
+    return [NSString stringWithFormat:@"%@\n\nDeviceDNA © Copyright 2009-2010 akosma\nsoftware - %@", instructions, allRightsReserved];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
