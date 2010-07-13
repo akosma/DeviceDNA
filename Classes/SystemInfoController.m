@@ -130,11 +130,16 @@
     return 1;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *instructions = NSLocalizedString(@"Select the values to send\nand press the message button", @"Instructions of use");
+    return instructions;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
-    NSString *instructions = NSLocalizedString(@"Select the values to send\nand press the message button", @"Instructions of use");
-    return [NSString stringWithFormat:@"%@\n\nDeviceDNA © Copyright 2009-2010 akosma\nsoftware - %@", instructions, allRightsReserved];
+    return [NSString stringWithFormat:@"DeviceDNA © Copyright 2009-2010\nakosma software - %@", allRightsReserved];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
