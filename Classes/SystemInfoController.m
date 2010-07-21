@@ -7,7 +7,6 @@
 //
 
 #import "SystemInfoController.h"
-#import <iAd/iAd.h>
 
 @interface SystemInfoController ()
 
@@ -281,10 +280,28 @@
     Class klass = NSClassFromString(@"ADBannerView");
     if (klass)
     {
-        ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 366.0, 320.0, 50.0)];
+        ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 416.0, 320.0, 50.0)];
         adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifier320x50;
+        adView.delegate = self;
         [self.view addSubview:adView];
     }
+}
+
+#pragma mark -
+#pragma mark ADBannerViewDelegate methods
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    [UIView beginAnimations:nil context:NULL];
+    banner.frame = CGRectMake(0.0, 366.0, 320.0, 50.0);
+    [UIView commitAnimations];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    [UIView beginAnimations:nil context:NULL];
+    banner.frame = CGRectMake(0.0, 416.0, 320.0, 50.0);
+    [UIView commitAnimations];
 }
     
 @end

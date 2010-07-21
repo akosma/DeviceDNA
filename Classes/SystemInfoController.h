@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <iAd/iAd.h>
 #import <MessageUI/MessageUI.h>
 
 typedef enum {
@@ -21,7 +22,8 @@ typedef enum {
 
 @interface SystemInfoController : UIViewController <UITableViewDataSource,
                                                     UITableViewDelegate,
-                                                    MFMailComposeViewControllerDelegate>
+                                                    MFMailComposeViewControllerDelegate,
+                                                    ADBannerViewDelegate>
 {
 @private
     UITableView *_tableView;
