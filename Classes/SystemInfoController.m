@@ -78,7 +78,7 @@
     }
 
     NSString *messageTitle = NSLocalizedString(@"System information sent by DeviceDNA", @"Title of the e-mail message");
-    NSMutableString *body = [[NSMutableString alloc] init];
+    NSMutableString *body = [NSMutableString string];
     [body appendFormat:@"<p><strong>%@:</strong></p><ul>", messageTitle];
     
     if ([self exposesInformation:SystemInfoUUID])
@@ -283,7 +283,7 @@
     Class klass = NSClassFromString(@"ADBannerView");
     if (klass)
     {
-        ADBannerView *adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 416.0, 320.0, 50.0)];
+        ADBannerView *adView = [[[ADBannerView alloc] initWithFrame:CGRectMake(0.0, 416.0, 320.0, 50.0)] autorelease];
         adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifier320x50;
         adView.delegate = self;
         [self.view addSubview:adView];
