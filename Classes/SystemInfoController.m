@@ -7,6 +7,7 @@
 //
 
 #import "SystemInfoController.h"
+#import "UIDeviceHardware.h"
 
 @interface SystemInfoController ()
 
@@ -98,10 +99,11 @@
     if ([self exposesInformation:SystemInfoModel])
     {
         NSString *modelString = NSLocalizedString(@"Device Model", @"The 'Model' word");
-        [body appendFormat:@"<li>%@: <strong>%@</strong></li>", modelString, self.device.localizedModel];        
+        NSString *device = [UIDeviceHardware platformString];
+        [body appendFormat:@"<li>%@: <strong>%@</strong></li>", modelString, device];
     }
     NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
-    [body appendFormat:@"</ul><p><strong>DeviceDNA</strong> © Copyright 2009-2010 <a href=\"http://akosma.com/\">akosma software</a>. %@.</p>", allRightsReserved];
+    [body appendFormat:@"</ul><p><strong>DeviceDNA</strong> © Copyright 2009-2011 <a href=\"http://akosma.com/\">akosma software</a>. %@.</p>", allRightsReserved];
     
     [self.mailComposer setSubject:messageTitle];
     [self.mailComposer setMessageBody:body isHTML:YES];
@@ -138,7 +140,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     NSString *allRightsReserved = NSLocalizedString(@"All Rights Reserved", @"The 'all rights reserved' phrase");
-    return [NSString stringWithFormat:@"DeviceDNA © Copyright 2009-2010\nakosma software - %@", allRightsReserved];
+    return [NSString stringWithFormat:@"DeviceDNA © Copyright 2009-2011\nakosma software - %@", allRightsReserved];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -224,7 +226,8 @@
     self.systemCell.tag = SystemInfoOS;
     
     self.modelCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-    self.modelCell.textLabel.text = self.device.localizedModel;
+    NSString *device = [UIDeviceHardware platformString];
+    self.modelCell.textLabel.text = device;
     self.modelCell.detailTextLabel.text = modelString;
     self.modelCell.tag = SystemInfoModel;
     
